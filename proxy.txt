@@ -5,7 +5,6 @@
 185.72.240.253:7289:allancard:allancard44
 91.123.10.196:6738:allancard:allancard44
 91.123.10.35:6577:allancard:allancard44
-85.198.47.129:6397:allancard:allancard44
 185.72.241.6:7298:allancard:allancard44
 185.72.241.254:7546:allancard:allancard44
 85.198.47.124:6392:allancard:allancard44
@@ -45,7 +44,6 @@
 85.198.45.4:5928:allancard:allancard44
 23.129.252.74:6342:allancard:allancard44
 23.129.252.9:6277:allancard:allancard44
-185.72.241.65:7357:allancard:allancard44
 91.123.8.202:6742:allancard:allancard44
 23.129.252.216:6484:allancard:allancard44
 91.123.10.134:6676:allancard:allancard44
@@ -94,7 +92,6 @@
 85.198.45.111:6035:allancard:allancard44
 91.123.8.82:6622:allancard:allancard44
 23.129.253.218:6836:allancard:allancard44
-91.123.10.10:6552:allancard:allancard44
 23.129.252.198:6466:allancard:allancard44
 23.129.252.23:6291:allancard:allancard44
 85.198.45.102:6026:allancard:allancard44
@@ -105,7 +102,6 @@
 91.123.10.47:6589:allancard:allancard44
 91.123.11.133:6399:allancard:allancard44
 85.198.47.27:6295:allancard:allancard44
-91.123.8.114:6654:allancard:allancard44
 85.198.47.39:6307:allancard:allancard44
 23.129.253.226:6844:allancard:allancard44
 185.72.240.128:7164:allancard:allancard44
@@ -221,7 +217,6 @@
 85.198.47.21:6289:allancard:allancard44
 85.198.47.121:6389:allancard:allancard44
 85.198.47.13:6281:allantyr:allantyr7
-85.198.47.129:6397:allancard:allancard44
 85.198.47.155:6423:allantyr:allantyr7
 85.198.47.104:6372:allantyr:allantyr7
 85.198.47.111:6379:allancard:allancard44
@@ -243,7 +238,6 @@
 185.72.241.89:7381:allantyr:allantyr7
 185.72.241.254:7546:allantyr:allantyr7
 185.72.241.250:7542:allantyr:allantyr7
-185.72.241.153:7445:allantyr:allantyr7
 185.72.241.130:7422:allantyr:allantyr7
 185.72.241.206:7498:allantyr:allantyr7
 185.72.241.138:7430:allantyr:allantyr7
@@ -289,7 +283,6 @@
 23.129.252.93:6361:allanmid:allamid2
 23.129.252.174:6442:allansing:allansing5
 23.129.252.215:6483:allansing:allansing5
-23.129.252.139:6407:allansing:allansing5
 23.129.252.31:6299:allansing:allansing5
 23.129.252.58:6326:allannatal:natalallan
 23.129.252.15:6283:allansing:allansing5
