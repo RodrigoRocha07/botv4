@@ -96,8 +96,9 @@ def run_script(url, chat_id):
     chrome_options = Options()
     chrome_options.add_argument("--load-extension=./chrome_proxy_extension")
 
-    service = Service("./chromedriver")
+    service = Service("/opt/homebrew/bin/chromedriver")
     driver = webdriver.Chrome(service=service, options=chrome_options)
+
 
     try:
         driver.get(url)

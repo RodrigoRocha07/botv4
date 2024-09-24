@@ -1,3 +1,6 @@
+# uvicorn poapg:app --host 0.0.0.0 --port 8000 
+
+
 import random
 import string
 import time
@@ -96,7 +99,7 @@ def run_script(url, chat_id):
     chrome_options = Options()
     chrome_options.add_argument("--load-extension=./chrome_proxy_extension")
 
-    service = Service("./chromedriver")
+    service = Service("/opt/homebrew/bin/chromedriver")
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
     try:
