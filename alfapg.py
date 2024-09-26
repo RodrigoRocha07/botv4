@@ -20,7 +20,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
-import time
+
 
 app = FastAPI()
 
@@ -109,24 +109,15 @@ def run_script(url, chat_id):
         random_name = generate_random_name(nomes, sobrenomes)
         random_username = generate_random_username(nomes, sobrenomes)
         time.sleep(1)
-
-        username = WebDriverWait(driver, 20).until(EC.presence_of_element_located(((By.XPATH, "/html/body/div[3]/div/div[2]/div/div[2]/div/div[1]/div/div[3]/div/div[2]/div/div[1]/div/form/div/div[2]/div/div/div/span/div[1]/div/div/div"))))
-        #
+        username = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "input.ant-select-search__field")))
         ActionChains(driver).move_to_element(username).click().send_keys(random_username).perform()
-        time.sleep(1)
-        password = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Inserir Senha']")))
-        password.send_keys('senha741')
-        time.sleep(1)
-
-        confirm_password = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Por favor, confirme sua senha novamente']")))
-        confirm_password.send_keys('senha741')
-
-        name = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Preencha o nome verdadeiro e torne -o conveniente para a retirada posterior!']")))
-        name.send_keys(random_name)
-
-        driver.find_element(By.CSS_SELECTOR, ".ant-btn.ant-btn-primary.ant-btn-block").click()
-     
-
+        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Inserir Senha']"))).send_keys('senha741')
+        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Por favor, confirme sua senha novamente']"))).send_keys('senha741')
+        WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Preencha o nome verdadeiro e torne -o conveniente para a retirada posterior!']"))
+        ).send_keys(random_name) 
+        driver.find_element(By.XPATH, "//button[contains(@class, 'ant-btn-primary') and .//span[text()='Registro']]").click()
+  
 
         message = "Dados de Acesso:"
         send_telegram_msg(bot_token, chat_id, message)
@@ -140,7 +131,7 @@ def run_script(url, chat_id):
         message3 = "=================="
         send_telegram_msg(bot_token, chat_id, message3)
 
-        time.sleep(1)
+
 
     finally:
         driver.quit()
@@ -151,7 +142,7 @@ def rodar(num_interactions: int = Path(..., description="Número de interações
     urls = {
         
         "italo": {
-            "url": "https://www.poapg.com/?id=180783748&currency=BRL&type=2",
+            "url": "https://alfapg.com/?id=244678127&currency=BRL&type=2",
 
             "chat_id": "-4217070412"
         },
