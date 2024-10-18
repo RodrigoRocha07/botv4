@@ -1,25 +1,21 @@
-from main import run_script
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+import time
 
-urls = {
-    
-    "italo": {
-        "url": "https://betx3.com/?id=337387816&currency=BRL&type=2",
+# Configurar o caminho do ChromeDriver
+service = Service('bot-2/chromedriver.exe')  # Use barras normais
+driver = webdriver.Chrome(service=service)
 
-        "chat_id": "-4217070412"
-    },
-    "kely": {
-        "url": "https://betx3.com/?id=659920364&currency=BRL&type=2",
-        "chat_id": "-4283310871"
-    }
+# Abrir uma página da web
+driver.get('https://google.com')
 
-}
+# Esperar alguns segundos
+time.sleep(5)
 
-url_to_load = urls[nome_url]["url"]
-specific_chat_id = urls[nome_url]["chat_id"]
+# Encontrar um elemento na página (exemplo: título)
+titulo = driver.find_element(By.TAG_NAME, 'h1')
+print(titulo.text)
 
-if nome_url not in urls:
-    return {"error": "Nome da URL inválido. Use 'dara', 'italo' ou 'kely'."}
-
-run_script()
-
-
+# Fechar o navegador
+driver.quit()

@@ -1076,3 +1076,6 @@
 185.72.241.34:7326:allancard:allancard44
 85.198.45.217:6141:allancard:allancard44
 85.198.47.76:6344:allancard:allancard44
+91.123.11.27:6293:allancard:allancard44
+91.123.11.147:6413:allancard:allancard44
+85.198.47.82:6350:allancard:allancard44
