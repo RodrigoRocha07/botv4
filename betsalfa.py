@@ -1,23 +1,20 @@
-import random
-import time
-import subprocess
-import requests
-from fastapi import FastAPI, Path
-from pydantic import BaseModel
-from selenium import webdriver
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome  import ChromeDriverManager
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.chrome.options import Options
-import json
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium import webdriver
-import os
 from getRandomProxy import get_random_proxy
+from fastapi import FastAPI, Path
+from selenium import webdriver
+import subprocess
+import requests
+import random
+import time
+import json
+import os
+
+
 app = FastAPI()
 
 nomes = [
@@ -128,10 +125,10 @@ def run_script(url, chat_id):
         return
     else:
         chrome_options = Options()
-        chrome_options.add_argument("--load-extension=.\\chrome_proxy_extension")
+        chrome_options.add_argument("--load-extension=./chrome_proxy_extension")
 
         try:
-            service = Service("chromedriver.exe")
+            service = Service(ChromeDriverManager().install())
             driver = webdriver.Chrome(service=service, options=chrome_options)
         except FileNotFoundError as e:
             print(f"Erro: Chromedriver não encontrado - {e.filename}")
@@ -143,7 +140,7 @@ def run_script(url, chat_id):
             time.sleep(1)
             random_name = generate_random_name(nomes, sobrenomes)
             random_username = generate_random_username(nomes, sobrenomes)
-            time.sleep(4)
+            time.sleep(40)
 
             driver.find_element(By.XPATH, '//*[@id="accountRegisterModal"]/form/div[2]/div/div/div/div/input').send_keys(random_username)
             WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Inserir Senha']"))).send_keys('senha741')
@@ -165,7 +162,7 @@ def rodar(num_interactions: int = Path(..., description="Número de interações
 
     urls = {
         
-        "italo": {
+        "italo1": {
             "url": "https://betsalfa.vip/?id=516307523&type=1&currency=BRL",
 
             "chat_id": "-4217070412"
@@ -174,11 +171,10 @@ def rodar(num_interactions: int = Path(..., description="Número de interações
             "url": "https://betsalfa.vip/?id=688137424&type=1&currency=BRL",
             "chat_id": "-4283310871"
         },
-        "dara": {
-            "url": "https://betsalfa.vip/?id=376121080&type=1&currency=BRL",
+        "testar": {
+            "url": "https://httpbin.org/ip",
             "chat_id": "-4213465625"
         }
-
     }
     
 

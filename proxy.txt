@@ -1,2 +1,8 @@
-
-185.72.241.172:7464:atackshark1:atackshark1
+85.198.45.127:6051:proxysfortes1:proxysfortes12
+91.123.11.176:6442:proxysfortes1:proxysfortes12
+185.72.242.41:5724:proxysfortes1:proxysfortes12
+185.72.240.227:7263:proxysfortes1:proxysfortes12
+23.129.252.95:6363:proxysfortes1:proxysfortes12
+23.129.254.49:6031:proxysfortes1:proxysfortes12
+185.72.242.79:5762:proxysfortes1:proxysfortes12
+91.123.10.32:6574:proxysfortes1:proxysfortes12
