@@ -17,7 +17,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
 import os
-
+from getRandomProxy import get_random_proxy
 app = FastAPI()
 
 nomes = [
@@ -95,6 +95,8 @@ def limpar_arquivo(caminho_arquivo):
 
 
 # Função para obter o proxy atual de um arquivo JSON
+#essa funcao n esta sendo usada pois estou pegando a proxy diretamente da funcao getRandomProxy, assim caso ela retorne vazia a funcao para
+
 def get_current_proxy():
     try:
         proxy_path = os.path.join('.', 'chrome_proxy_extension', 'current_proxy.json')
@@ -111,7 +113,7 @@ def get_current_proxy():
 # Função para rodar o script
 def run_script(url, chat_id):
     try:
-        subprocess.run(["node", os.path.abspath("getRandomProxy.js")])
+        current_proxy = get_random_proxy()
     except FileNotFoundError as e:
         print(f"Erro ao rodar o script: Arquivo não encontrado - {e.filename}")
         return
@@ -119,44 +121,44 @@ def run_script(url, chat_id):
         print(f"Erro ao rodar o script: {e}")
         return
 
-    current_proxy = get_current_proxy()
-    print(current_proxy)
     if not current_proxy:
+        print('')
         print("Proxy não encontrado. Abortando execução.")
+        print('')
         return
+    else:
+        chrome_options = Options()
+        chrome_options.add_argument("--load-extension=.\\chrome_proxy_extension")
 
-    chrome_options = Options()
-    chrome_options.add_argument("--load-extension=.\\chrome_proxy_extension")
+        try:
+            service = Service("chromedriver.exe")
+            driver = webdriver.Chrome(service=service, options=chrome_options)
+        except FileNotFoundError as e:
+            print(f"Erro: Chromedriver não encontrado - {e.filename}")
+            return
 
-    try:
-        service = Service("chromedriver.exe")
-        driver = webdriver.Chrome(service=service, options=chrome_options)
-    except FileNotFoundError as e:
-        print(f"Erro: Chromedriver não encontrado - {e.filename}")
-        return
+        try:
+            driver.get(url)
+            form = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, '//form')))
+            time.sleep(1)
+            random_name = generate_random_name(nomes, sobrenomes)
+            random_username = generate_random_username(nomes, sobrenomes)
+            time.sleep(4)
 
-    try:
-        driver.get(url)
-        form = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, '//form')))
-        time.sleep(1)
-        random_name = generate_random_name(nomes, sobrenomes)
-        random_username = generate_random_username(nomes, sobrenomes)
-        time.sleep(4)
+            driver.find_element(By.XPATH, '//*[@id="accountRegisterModal"]/form/div[2]/div/div/div/div/input').send_keys(random_username)
+            WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Inserir Senha']"))).send_keys('senha741')
+            WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Por favor, confirme sua senha novamente']"))).send_keys('senha741')
+            WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Preencha o nome verdadeiro e torne -o conveniente para a retirada posterior!']"))).send_keys(random_name) 
+            #driver.find_element(By.CLASS_NAME, 'van-button').click()
 
-        driver.find_element(By.XPATH, '//*[@id="accountRegisterModal"]/form/div[2]/div/div/div/div/input').send_keys(random_username)
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Inserir Senha']"))).send_keys('senha741')
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Por favor, confirme sua senha novamente']"))).send_keys('senha741')
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Preencha o nome verdadeiro e torne -o conveniente para a retirada posterior!']"))).send_keys(random_name) 
-        #driver.find_element(By.CLASS_NAME, 'van-button').click()
+            # Enviar mensagens de sucesso via Telegram
+            send_telegram_msg(bot_token, chat_id, "Dados de Acesso:")
+            send_telegram_msg(bot_token, chat_id, f"Login: {random_username}\nSenha: senha741")
+            send_telegram_msg(bot_token, chat_id, f"{current_proxy['host']}:{current_proxy['port']}:{current_proxy['username']}:{current_proxy['password']}")
+            send_telegram_msg(bot_token, chat_id, "==================")
 
-        # Enviar mensagens de sucesso via Telegram
-        send_telegram_msg(bot_token, chat_id, "Dados de Acesso:")
-        send_telegram_msg(bot_token, chat_id, f"Login: {random_username}\nSenha: senha741")
-        send_telegram_msg(bot_token, chat_id, f"{current_proxy['host']}:{current_proxy['port']}:{current_proxy['username']}:{current_proxy['password']}")
-        send_telegram_msg(bot_token, chat_id, "==================")
-
-    finally:
-        driver.quit()
+        finally:
+            driver.quit()
 
 @app.get("/rodar/{num_interactions}/{nome_url}")
 def rodar(num_interactions: int = Path(..., description="Número de interações a serem realizadas"), nome_url: str = Path(..., description="Nome da URL a ser utilizada")):
