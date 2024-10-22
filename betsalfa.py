@@ -83,6 +83,17 @@ def send_telegram_msg(bot_token, chat_id, message):
     response = requests.post(url, data=data)
     return response.json()
 
+def limpar_arquivo(caminho_arquivo):
+    try:
+        # Abre o arquivo no modo de escrita 'w', que limpa o conteúdo
+        with open(caminho_arquivo, 'w') as arquivo:
+            # Não precisa escrever nada, isso já limpa o arquivo
+            pass
+        print(f"Arquivo {caminho_arquivo} foi limpo com sucesso.")
+    except Exception as e:
+        print(f"Erro ao limpar o arquivo: {e}")
+
+
 # Função para obter o proxy atual de um arquivo JSON
 def get_current_proxy():
     try:
@@ -91,6 +102,7 @@ def get_current_proxy():
         with open(proxy_path, 'r') as file:
             proxy_data = json.load(file)
             print(f"Proxy data loaded: {proxy_data}")  # Log do conteúdo
+            limpar_arquivo(proxy_path)
         return proxy_data
     except FileNotFoundError:
         print(f"Arquivo {proxy_path} não encontrado.")
@@ -108,6 +120,7 @@ def run_script(url, chat_id):
         return
 
     current_proxy = get_current_proxy()
+    print(current_proxy)
     if not current_proxy:
         print("Proxy não encontrado. Abortando execução.")
         return
@@ -134,7 +147,7 @@ def run_script(url, chat_id):
         WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Inserir Senha']"))).send_keys('senha741')
         WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Por favor, confirme sua senha novamente']"))).send_keys('senha741')
         WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Preencha o nome verdadeiro e torne -o conveniente para a retirada posterior!']"))).send_keys(random_name) 
-        driver.find_element(By.CLASS_NAME, 'van-button').click()
+        #driver.find_element(By.CLASS_NAME, 'van-button').click()
 
         # Enviar mensagens de sucesso via Telegram
         send_telegram_msg(bot_token, chat_id, "Dados de Acesso:")

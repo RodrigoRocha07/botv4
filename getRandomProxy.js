@@ -29,7 +29,9 @@ function removeUsedProxy(proxy) {
 function getRandomProxy() {
     const proxies = readProxies();
     if (proxies.length === 0) {
-        console.log('No more proxies available.');
+        console.log('/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_');
+        console.log('                  Não existem mais proxys disponiveis.');
+        console.log('/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_');
         return null;
     }
 
@@ -48,9 +50,11 @@ function getRandomProxy() {
         username: parts[2],
         password: parts[3]
     };
-
-    fs.writeFileSync(proxyOutputFilePath, JSON.stringify(randomProxy, null, 2));
-    return randomProxy;
+    if (proxies.length !== 0){
+        console.log('proxy localizada')
+        fs.writeFileSync(proxyOutputFilePath, JSON.stringify(randomProxy, null, 2));
+        return randomProxy;
+    }
 }
 
 // Testar a função getRandomProxy
